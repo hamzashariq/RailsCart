@@ -19,7 +19,13 @@
   </head>
 
   <body>
-    <%= render 'layouts/navbar_logged_out' %>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+  
+    <% unless controller_name == 'registrations' %>
+      <%= render 'layouts/navbar_logged_out' %>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
