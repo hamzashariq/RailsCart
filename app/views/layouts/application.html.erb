@@ -23,7 +23,11 @@
     <p class="alert"><%= alert %></p>
   
     <% unless controller_name == 'registrations' %>
-      <%= render 'layouts/navbar_logged_out' %>
+      <% if user_signed_in? %>
+        <%= render 'layouts/navbar_logged_in' %>
+      <% else %>
+        <%= render 'layouts/navbar_logged_out' %>
+      <% end %>
     <% end %>
 
     <%= yield %>
