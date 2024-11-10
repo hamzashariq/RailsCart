@@ -14,4 +14,13 @@ Rails.application.routes.draw do
   root "home#index"
 
   resources :products, only: [:index, :show]
+
+  resource :cart, only: [:show] do
+    resources :carts_products, only: [:create, :update, :destroy] do
+      member do
+        patch :increment
+        patch :decrement
+      end
+    end
+  end
 end
