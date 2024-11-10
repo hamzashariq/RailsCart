@@ -16,10 +16,14 @@ Rails.application.routes.draw do
   resources :products, only: [:index, :show]
 
   resource :cart, only: [:show] do
-    resources :carts_products, only: [:create, :update, :destroy] do
+    resources :carts_products, only: [:destroy] do
       member do
         patch :increment
         patch :decrement
+      end
+
+      collection do
+        post :add_to_cart
       end
     end
   end

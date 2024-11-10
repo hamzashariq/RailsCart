@@ -1,0 +1,7 @@
+<% if cart_item_count > 0 %>
+  <span id="cart-item-count" class="absolute top-0 right-0 flex justify-center items-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">
+    <%= cart_item_count %>
+  </span>
+<% else %>
+  <span id="cart-item-count" class="hidden"></span> <!-- Hide when count is 0 -->
+<% end %>
