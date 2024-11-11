@@ -16,6 +16,10 @@ Rails.application.routes.draw do
   resources :products, only: [:index, :show]
 
   resource :cart, only: [:show] do
+    member do
+      get :checkout
+    end
+
     resources :carts_products, only: [:destroy] do
       member do
         patch :increment
