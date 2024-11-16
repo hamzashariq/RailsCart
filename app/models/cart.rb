@@ -5,4 +5,8 @@ class Cart < ApplicationRecord
   def total_items
     carts_products.sum(:quantity)
   end
+
+  def total_price
+    carts_products.sum { |cart_product| cart_product.product.price * cart_product.quantity }
+  end
 end
