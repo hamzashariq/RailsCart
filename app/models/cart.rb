@@ -9,4 +9,8 @@ class Cart < ApplicationRecord
   def total_price
     carts_products.sum { |cart_product| cart_product.product.price * cart_product.quantity }
   end
+
+  def empty!
+    carts_products.each(&:destroy!)
+  end
 end

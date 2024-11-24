@@ -57,7 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_11_100858) do
     t.bigint "order_id", null: false
     t.string "name"
     t.decimal "price"
-    t.integer "quanitity"
+    t.integer "quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_product_snapshots_on_order_id"

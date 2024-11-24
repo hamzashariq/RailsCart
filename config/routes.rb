@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resource :cart, only: [:show] do
     member do
       get :checkout
+      post :complete_checkout
     end
 
     resources :carts_products, only: [:destroy] do

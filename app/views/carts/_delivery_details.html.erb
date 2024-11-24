@@ -1,0 +1,47 @@
+<%= fields_for "delivery_information" do |f| %>
+  <div class="space-y-4">
+    <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Delivery Details</h2>
+
+    <div>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <%= f.label :first_name, "First name", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.text_field :first_name, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500", placeholder:"Bonnie Green", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :last_name, "Last name", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.text_field :last_name, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500", placeholder:"Bonnie Green", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :email, "Your email*", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.email_field :email, required: true, placeholder: "name@flowbite.com",
+              class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" %>
+        </div>
+
+        <div>
+          <%= f.label :country, "Country*", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.select :country, [["United States", "US"], ["Australia", "AS"], ["France", "FR"], ["Spain", "ES"], ["United Kingdom", "UK"]],
+              {}, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" %>
+        </div>
+
+        <div>
+          <%= f.label :city, "City*", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.select :city, [["San Francisco", "SF"], ["New York", "NY"], ["Los Angeles", "LA"], ["Chicago", "CH"], ["Houston", "HU"]],
+              {}, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" %>
+        </div>
+
+        <div>
+          <%= f.label :number, "Phone Number*", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+          <%= f.telephone_field :number, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500", placeholder: "+1 123-456-7890", required: true %>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <%= f.label :address, "Address*", class: "mb-2 block text-sm font-medium text-gray-900 dark:text-white" %>
+        <%= f.text_area :address, rows: 4, class: "block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500", placeholder: "123 Main Street, Apartment 4B", required: true %>
+      </div>
+    </div>
+  </div>
+<% end %>
