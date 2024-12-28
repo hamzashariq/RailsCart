@@ -33,4 +33,11 @@ Rails.application.routes.draw do
   end
 
   resources :orders, only: [:create]
+
+  resources :payments, only: [:new, :create] do
+    collection do
+      get :success
+      get :cancel
+    end
+  end
 end

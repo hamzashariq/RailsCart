@@ -108,6 +108,10 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.5.1)
+    dotenv (3.1.7)
+    dotenv-rails (3.1.7)
+      dotenv (= 3.1.7)
+      railties (>= 6.1)
     drb (2.2.1)
     erubi (1.13.0)
     globalid (1.2.1)
@@ -290,6 +294,7 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.1)
+    stripe (13.2.0)
     strscan (3.1.0)
     tailwindcss-rails (2.7.3-aarch64-linux)
       railties (>= 7.0.0)
@@ -334,6 +339,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  dotenv-rails
   importmap-rails
   jbuilder
   pg (~> 1.1)
@@ -345,6 +351,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
+  stripe
   tailwindcss-rails
   turbo-rails
   tzinfo-data
