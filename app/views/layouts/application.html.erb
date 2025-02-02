@@ -19,9 +19,6 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
     <% if ['registrations', 'sessions'].exclude?(controller_name) %>
       <% if user_signed_in? %>
         <%= render 'layouts/navbar_logged_in' %>
@@ -31,6 +28,7 @@
     <% end %>
 
     <div class="main-content mx-auto max-w-screen-xl p-4 mt-20">
+      <%= render 'layouts/flash_messages' %>
       <%= yield %>
     </div>
   </body>

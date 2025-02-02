@@ -1,0 +1,9 @@
+<% if flash.any? %>
+  <% flash.each do |type, value| %>
+    <% if type == 'alert' %>
+     <%= render partial: 'layouts/flash_alert', locals: { message: value } %>
+    <% else %>
+     <%= render partial: 'layouts/flash_notice', locals: { message: value } %>
+    <% end %>
+  <% end %>
+<% end %>
