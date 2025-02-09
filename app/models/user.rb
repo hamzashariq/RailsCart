@@ -9,7 +9,14 @@ class User < ApplicationRecord
   belongs_to :company
   has_one :cart, dependent: :destroy
 
+  validates :first_name, presence: true, length: { maximum: 50 }
+  validates :last_name, presence: true, length: { maximum: 50 }
+
   after_create :create_cart_for_user
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 
   private
 

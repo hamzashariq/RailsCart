@@ -19,14 +19,9 @@
   </head>
 
   <body>
-    <% if user_signed_in? %>
-      <%= render 'layouts/navbar_logged_in' %>
-    <% else %>
-      <%= render 'layouts/navbar_logged_out' %>
-    <% end %>
-
-    <div class="main-content mx-auto max-w-screen-xl p-4 mt-20">
+    <div class="main-content mx-auto max-w-screen-xl p-4 mt-5">
       <%= render 'layouts/flash_messages' %>
+      <%= render "devise/shared/error_messages", resource: resource %>
       <%= yield %>
     </div>
   </body>
