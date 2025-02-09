@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_02_09_082959) do
+ActiveRecord::Schema[7.2].define(version: 2025_02_09_084325) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,6 +18,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_09_082959) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_carts_on_company_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
@@ -77,6 +79,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_09_082959) do
     t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_products_on_company_id"
     t.index ["name"], name: "index_products_on_name"
   end
 
@@ -88,14 +92,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_09_082959) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "carts", "companies"
   add_foreign_key "carts", "users"
   add_foreign_key "carts_products", "carts"
   add_foreign_key "carts_products", "products"
   add_foreign_key "delivery_informations", "orders"
   add_foreign_key "orders", "users"
   add_foreign_key "product_snapshots", "orders"
+  add_foreign_key "products", "companies"
+  add_foreign_key "users", "companies"
 end

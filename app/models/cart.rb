@@ -1,6 +1,9 @@
 class Cart < ApplicationRecord
-  has_many :carts_products, dependent: :destroy
+  acts_as_tenant(:company)
+
+  belongs_to :company
   belongs_to :user, optional: true
+  has_many :carts_products, dependent: :destroy
 
   def total_items
     carts_products.sum(:quantity)

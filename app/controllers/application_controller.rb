@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
 
+  set_current_tenant_by_subdomain(:company, :subdomain)
   before_action :set_current_cart
 
   def set_current_cart
@@ -17,6 +18,6 @@ class ApplicationController < ActionController::Base
   end
 
   def create_guest_cart
-    Cart.create.tap { |cart| session[:cart_id] = cart.id }
+    Cart.create(company_id: current_tenant.id).tap { |cart| session[:cart_id] = cart.id }
   end
 end
