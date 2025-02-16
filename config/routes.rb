@@ -1,43 +1,47 @@
 Rails.application.routes.draw do
-  devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  # System routes that don't require a subdomain
   get "up" => "rails/health#show", as: :rails_health_check
-
-  # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
 
-  # Defines the root path route ("/")
-  root "home#index"
+  # All application routes require a subdomain
+  constraints(subdomain: /.+/) do
+    devise_for :users
 
-  resources :products, only: [:index, :show]
+    # Root path for subdomains
+    root "home#index", as: :subdomain_root
 
-  resource :cart, only: [:show] do
-    member do
-      get :checkout
-    end
+    resources :products, only: [:index, :show]
 
-    resources :carts_products, only: [:destroy] do
+    resource :cart, only: [:show] do
       member do
-        patch :increment
-        patch :decrement
+        get :checkout
       end
 
+      resources :carts_products, only: [:destroy] do
+        member do
+          patch :increment
+          patch :decrement
+        end
+
+        collection do
+          post :add_to_cart
+        end
+      end
+    end
+
+    resources :orders, only: [:create]
+
+    resources :payments, only: [:new, :create] do
       collection do
-        post :add_to_cart
+        get :success
+        get :cancel
       end
     end
   end
 
-  resources :orders, only: [:create]
-
-  resources :payments, only: [:new, :create] do
-    collection do
-      get :success
-      get :cancel
-    end
+  # Routes for the main domain (no subdomain)
+  constraints(subdomain: "") do
+    root "home#landing"  # Landing page for the main domain
   end
 end
