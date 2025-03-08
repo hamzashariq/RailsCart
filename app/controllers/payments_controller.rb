@@ -6,20 +6,20 @@ class PaymentsController < ApplicationController
 
   def create
     # Put session creation logic in a service
-  
-    session = Stripe::Checkout::Session.create( 
-      customer_email: current_user.email, 
+
+    session = Stripe::Checkout::Session.create(
+      customer_email: current_user.email,
       line_items: [{
         price_data: {
-          currency: 'usd',
+          currency: "usd",
           product_data: {
-            name: 'Custom Payment',
+            name: "Custom Payment"
           },
-          unit_amount: 400, # Amount in cents
+          unit_amount: 400 # Amount in cents
         },
-        quantity: 1,
+        quantity: 1
       }],
-      mode: 'payment',
+      mode: "payment",
       success_url:  success_payments_url,
       cancel_url: cancel_payments_url
      )
@@ -28,12 +28,12 @@ class PaymentsController < ApplicationController
   end
 
   def success
-    #handle successful payments
-    redirect_to root_url, notice: "Purchase Successful"
+    # handle successful payments
+    redirect_to root_url(subdomain: current_tenant.subdomain), notice: "Purchase Successful"
   end
-  
+
   def cancel
-    #handle if the payment is cancelled
+    # handle if the payment is cancelled
     redirect_to root_url, notice: "Purchase Unsuccessful"
   end
 end

@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
 
-  after_create :create_cart_for_user
+  after_create_commit :create_cart_for_user
 
   def name
     "#{first_name} #{last_name}"
@@ -21,7 +21,6 @@ class User < ApplicationRecord
   private
 
   def create_cart_for_user
-    # Create a cart for the user, company_id will be automatically set by acts_as_tenant
-    create_cart unless cart.present?
+    create_cart(company_id: company_id) unless cart.present?
   end
 end

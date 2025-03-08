@@ -43,5 +43,13 @@ Rails.application.routes.draw do
   # Routes for the main domain (no subdomain)
   constraints(subdomain: "") do
     root "home#landing"  # Landing page for the main domain
+
+    # Company Registration
+    resource :company, only: [] do
+      collection do
+        get "sign_up", to: "companies/registrations#new", as: :new_registration
+        post "sign_up", to: "companies/registrations#create", as: :registration
+      end
+    end
   end
 end

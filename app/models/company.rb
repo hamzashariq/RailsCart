@@ -9,6 +9,8 @@ class Company < ApplicationRecord
   has_many :carts, dependent: :destroy
   has_many :orders, dependent: :destroy
 
+  accepts_nested_attributes_for :users
+
   before_validation :normalize_subdomain
 
   private
