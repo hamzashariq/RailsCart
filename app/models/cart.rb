@@ -16,4 +16,14 @@ class Cart < ApplicationRecord
   def empty!
     carts_products.each(&:destroy!)
   end
+
+  # Define which attributes can be used for Ransack searches in ActiveAdmin
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "updated_at", "user_id"]
+  end
+
+  # Allow associations to be searchable
+  def self.ransackable_associations(auth_object = nil)
+    ["carts_products", "company", "user"]
+  end
 end

@@ -8,6 +8,7 @@ class User < ApplicationRecord
 
   belongs_to :company
   has_one :cart, dependent: :destroy
+  has_many :orders, dependent: :destroy
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
@@ -25,6 +26,16 @@ class User < ApplicationRecord
 
   def customer?
     user_type == "customer"
+  end
+
+  # Define which attributes can be used for Ransack searches in ActiveAdmin
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "email", "first_name", "id", "last_name", "updated_at", "user_type"]
+  end
+
+  # Allow associations to be searchable
+  def self.ransackable_associations(auth_object = nil)
+    ["cart", "company"]
   end
 
   private

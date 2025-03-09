@@ -13,6 +13,16 @@ class Company < ApplicationRecord
 
   before_validation :normalize_subdomain
 
+  # Define which attributes can be used for Ransack searches in ActiveAdmin
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "name", "subdomain", "updated_at"]
+  end
+
+  # Allow associations to be searchable
+  def self.ransackable_associations(auth_object = nil)
+    ["carts", "orders", "products", "users"]
+  end
+
   private
 
   def normalize_subdomain
