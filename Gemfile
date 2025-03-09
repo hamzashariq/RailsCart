@@ -34,6 +34,8 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 gem "devise"
+gem "activeadmin"
+gem "sassc-rails"
 
 gem "acts_as_tenant"
 

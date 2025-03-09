@@ -10,6 +10,14 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def authenticate_admin_user!
+    authenticate_user!
+    unless current_user && current_user.admin?
+      flash[:alert] = "You are not authorized to access the admin panel."
+      redirect_to root_path
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name])

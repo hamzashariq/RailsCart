@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   constraints(subdomain: /.+/) do
     devise_for :users
 
+    ActiveAdmin.routes(self)
+
     # Root path for subdomains
     root "home#index", as: :subdomain_root
 
