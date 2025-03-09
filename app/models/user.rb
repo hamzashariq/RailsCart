@@ -11,11 +11,20 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
+  validates :user_type, presence: true, inclusion: { in: %w[admin customer] }
 
   after_create_commit :create_cart_for_user
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  def admin?
+    user_type == "admin"
+  end
+
+  def customer?
+    user_type == "customer"
   end
 
   private

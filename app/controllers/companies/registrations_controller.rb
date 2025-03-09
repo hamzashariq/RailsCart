@@ -11,7 +11,7 @@ class Companies::RegistrationsController < ApplicationController
     @company = Company.new(company_params)
 
     # Set the first user as an admin
-    @company.users.first.admin = true if @company.users.first
+    @company.users.first.user_type = "admin" if @company.users.first
 
     if @company.save
       # Sign in the newly created admin user
