@@ -1,6 +1,6 @@
 class Companies::RegistrationsController < ApplicationController
   skip_before_action :set_current_cart
-  layout "landing"
+  layout "company_registration"
 
   def new
     @company = Company.new
