@@ -40,6 +40,10 @@ Rails.application.routes.draw do
         get :cancel
       end
     end
+
+    resource :user, only: [] do
+      get "orders", on: :member
+    end
   end
 
   # Routes for the main domain (no subdomain)
