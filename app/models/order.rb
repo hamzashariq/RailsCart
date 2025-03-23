@@ -8,6 +8,14 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :delivery_information
 
+  enum delivery_status: {
+    pending: 0,
+    confirmed: 1,
+    shipped: 2,
+    delivered: 3,
+    cancelled: 4
+  }
+
   def total
     product_snapshots.sum(:price)
   end
