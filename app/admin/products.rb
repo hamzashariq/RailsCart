@@ -44,6 +44,9 @@ ActiveAdmin.register Product do
         end
       end
     end
+
+    # Add active admin comments
+    active_admin_comments
   end
 
   # Form
