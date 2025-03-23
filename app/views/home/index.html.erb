@@ -1,34 +1,25 @@
 <div id="default-carousel" class="relative w-full" data-carousel="slide">
     <!-- Carousel wrapper -->
     <div class="relative h-64 overflow-hidden rounded-lg md:h-96">
-         <!-- Item 1 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <%= image_tag "img1.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "..." %>
-        </div>
-        <!-- Item 2 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <%= image_tag "img1.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "..." %>
-        </div>
-        <!-- Item 3 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <%= image_tag "img1.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "..." %>
-        </div>
-        <!-- Item 4 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-          <%= image_tag "img1.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "..." %>
-        </div>
-        <!-- Item 5 -->
-        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-            <%= image_tag "img1.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "..." %>
-        </div>
+        <% if current_tenant.carousel_images.attached? %>
+            <% current_tenant.carousel_images.each do |image| %>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <%= image_tag image, class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "Carousel image" %>
+                </div>
+            <% end %>
+        <% else %>
+            <!-- Default image when no carousel images are uploaded -->
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <%= image_tag "default_carousel.jpg", class: "absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", alt: "Default carousel image" %>
+            </div>
+        <% end %>
     </div>
     <!-- Slider indicators -->
     <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
-        <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 5" data-carousel-slide-to="4"></button>
+        <% image_count = current_tenant.carousel_images.attached? ? current_tenant.carousel_images.count : 1 %>
+        <% image_count.times do |i| %>
+            <button type="button" class="w-3 h-3 rounded-full" aria-current="<%= i == 0 ? 'true' : 'false' %>" aria-label="Slide <%= i + 1 %>" data-carousel-slide-to="<%= i %>"></button>
+        <% end %>
     </div>
     <!-- Slider controls -->
     <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
@@ -89,7 +80,7 @@
       </a>
       <a href="#" class="flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87 1.07 1.413 2.075 1.228 3.192 2.644 1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58 1.402.693 2.918.351 2.918 2.334 0 .276 0 2.008 1.972 2.008 2.026.031 2.026-1.678 2.026-2.008 0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
         </svg>
         <span class="text-sm font-medium text-gray-900 dark:text-white">Sports &amp; Outdoors</span>
       </a>
