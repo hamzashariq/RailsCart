@@ -118,32 +118,43 @@
       </div>
 
       <%# Pagination %>
-      <% if false # @orders.total_pages > 1 %>
+      <% if @pagy.pages > 1 %>
         <nav class="mt-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation">
           <ul class="flex h-8 items-center -space-x-px text-sm">
+            <%# Previous page %>
             <li>
-              <%= link_to orders_path(page: @orders.prev_page), class: "ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white #{@orders.first_page? ? 'cursor-not-allowed opacity-50' : ''}", disabled: @orders.first_page? do %>
-                <span class="sr-only">Previous</span>
-                <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" />
-                </svg>
-              <% end %>
-            </li>
+              <%= link_to orders_user_path(page: @pagy.prev), class: "ms-0 flex h-8 items-center justify-center rounded-s-lg border border-e-0 border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white #{@pagy.prev ? '' : 'cursor-not-allowed opacity-50'}", "aria-label": "Previous", disabled: !@pagy.prev do %>
+              <span class="sr-only">Previous</span>
+              <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m15 19-7-7 7-7" />
+              </svg>
+            <% end %>
+          </li>
 
-            <% @orders.total_pages.times do |i| %>
+          <%# Page numbers %>
+          <% @pagy.series.each do |item| %>
+            <% if item.is_a?(Integer) %>
               <li>
-                <%= link_to i + 1, orders_path(page: i + 1), class: "flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight #{@orders.current_page == i + 1 ? 'z-10 border-primary-300 bg-primary-50 text-primary-600 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}" %>
+                <%= link_to item, orders_user_path(page: item), class: "flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight #{@pagy.page == item ? 'z-10 border-primary-300 bg-primary-50 text-primary-600 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white' : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'}" %>
+              </li>
+            <% elsif item.is_a?(String) %>
+              <li>
+                <span class="flex h-8 items-center justify-center border border-gray-300 bg-white px-3 leading-tight text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                  <%= item %>
+                </span>
               </li>
             <% end %>
+          <% end %>
 
-            <li>
-              <%= link_to orders_path(page: @orders.next_page), class: "flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white #{@orders.last_page? ? 'cursor-not-allowed opacity-50' : ''}", disabled: @orders.last_page? do %>
-                <span class="sr-only">Next</span>
-                <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
-                </svg>
-              <% end %>
-            </li>
+          <%# Next page %>
+          <li>
+            <%= link_to orders_user_path(page: @pagy.next), class: "flex h-8 items-center justify-center rounded-e-lg border border-gray-300 bg-white px-3 leading-tight text-gray-500 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white #{@pagy.next ? '' : 'cursor-not-allowed opacity-50'}", "aria-label": "Next", disabled: !@pagy.next do %>
+              <span class="sr-only">Next</span>
+              <svg class="h-4 w-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 5 7 7-7 7" />
+              </svg>
+            <% end %>
+          </li>
           </ul>
         </nav>
       <% end %>

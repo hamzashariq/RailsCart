@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def cart_item_count
     if current_user
       current_user.cart.total_items
