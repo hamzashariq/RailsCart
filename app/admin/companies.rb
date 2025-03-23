@@ -1,75 +1,37 @@
-ActiveAdmin.register Company do
-  menu priority: 6
+ActiveAdmin.register_page "Store Settings" do
+  menu priority: 6, label: "Store Settings"
 
-  # Only super admins should be able to manage companies
-  actions :all
-
-  # Filter options
-  filter :name
-  filter :subdomain
-  filter :created_at
-
-  # Index page
-  index do
-    selectable_column
-    id_column
-    column :name
-    column :subdomain
-    column "Users" do |company|
-      company.users.count
-    end
-    column "Products" do |company|
-      company.products.count
-    end
-    column :created_at
-    actions
-  end
-
-  # Show page
-  show do
-    attributes_table do
-      row :id
-      row :name
-      row :subdomain
-      row :created_at
-      row :updated_at
-    end
-
-    panel "Users" do
-      table_for company.users do
-        column :id
-        column :name do |user|
-          link_to user.name, admin_panel_user_path(user)
+  content title: "Store Settings" do
+    columns do
+      column do
+        panel "Store Information" do
+          attributes_table_for current_user.company do
+            row :name
+            row :subdomain
+            row :created_at
+            row :updated_at
+          end
         end
-        column :email
-        column :user_type
-        column :created_at
       end
-    end
 
-    panel "Products" do
-      table_for company.products do
-        column :id
-        column :name do |product|
-          link_to product.name, admin_panel_product_path(product)
+      column do
+        panel "Store Customization" do
+          para "Store customization options will be available soon."
+          para "Features coming in the next update:"
+          ul do
+            li "Store theme customization"
+            li "Logo upload"
+            li "Custom domain settings"
+            li "Email templates"
+          end
         end
-        column :price do |product|
-          number_to_currency(product.price)
-        end
-        column :created_at
       end
     end
   end
 
-  # Form
-  form do |f|
-    f.inputs "Company Details" do
-      f.input :name
-      f.input :subdomain
-    end
-    f.actions
+  sidebar :help do
+    para "Need help customizing your store?"
+    para "Contact support at:"
+    para "support@example.com"
   end
-
-  # Permit parameters
-  permit_params :name, :subdomain
 end

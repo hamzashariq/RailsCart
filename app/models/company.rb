@@ -20,7 +20,7 @@ class Company < ApplicationRecord
 
   # Allow associations to be searchable
   def self.ransackable_associations(auth_object = nil)
-    ["carts", "orders", "products", "users"]
+    ["users", "products", "orders", "carts"]
   end
 
   private
