@@ -5,6 +5,7 @@ class Order < ApplicationRecord
   belongs_to :user
   has_one :delivery_information
   has_many :product_snapshots
+  has_many :order_histories, dependent: :destroy
 
   accepts_nested_attributes_for :delivery_information
 
@@ -15,6 +16,9 @@ class Order < ApplicationRecord
     delivered: 3,
     cancelled: 4
   }
+
+  after_create :create_initial_history
+  after_update :track_status_change, if: :saved_change_to_delivery_status?
 
   def total
     product_snapshots.sum(:price)
@@ -27,6 +31,23 @@ class Order < ApplicationRecord
 
   # Allow associations to be searchable
   def self.ransackable_associations(auth_object = nil)
-    ["company", "delivery_information", "product_snapshots", "user"]
+    ["company", "delivery_information", "product_snapshots", "user", "order_histories"]
+  end
+
+  private
+
+  def create_initial_history
+    order_histories.create!(
+      note: "Order placed",
+      status_to: delivery_status
+    )
+  end
+
+  def track_status_change
+    order_histories.create!(
+      note: "Order status changed from #{delivery_status_previously_was} to #{delivery_status}",
+      status_from: delivery_status_previously_was,
+      status_to: delivery_status
+    )
   end
 end

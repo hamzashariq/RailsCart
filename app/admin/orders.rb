@@ -55,6 +55,15 @@ ActiveAdmin.register Order do
       end
     end
 
+    panel "Order History" do
+      table_for order.order_histories.order(created_at: :desc) do
+        column :created_at
+        column :note
+        column :status_from
+        column :status_to
+      end
+    end
+
     panel "Delivery Information" do
       if order.delivery_information
         attributes_table_for order.delivery_information do
