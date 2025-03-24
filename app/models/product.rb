@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   acts_as_tenant(:company)
 
+  has_one_attached :image
   belongs_to :company
   has_many :carts_products, dependent: :destroy
 

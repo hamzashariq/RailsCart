@@ -29,6 +29,11 @@ ActiveAdmin.register Product do
         number_to_currency(product.price)
       end
       row :stock
+      row :image do |product|
+        if product.image.attached?
+          image_tag url_for(product.image), style: "max-width: 200px"
+        end
+      end
       row :created_at
       row :updated_at
     end
@@ -55,10 +60,11 @@ ActiveAdmin.register Product do
       f.input :name
       f.input :price
       f.input :stock
+      f.input :image, as: :file
     end
     f.actions
   end
 
   # Permit parameters
-  permit_params :name, :price, :stock
+  permit_params :name, :price, :stock, :image
 end
