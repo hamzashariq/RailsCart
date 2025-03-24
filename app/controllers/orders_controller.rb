@@ -15,6 +15,17 @@ class OrdersController < ApplicationController
     @order = current_user.orders.find(params[:id])
   end
 
+  def cancel
+    @order = current_user.orders.find(params[:id])
+
+    if @order.shipped? || @order.delivered?
+      redirect_to @order, alert: "Cannot cancel an order that has been shipped or delivered."
+    else
+      @order.update!(delivery_status: :cancelled)
+      redirect_to @order, notice: "Order was successfully cancelled."
+    end
+  end
+
   private
 
   def delivery_information_params
