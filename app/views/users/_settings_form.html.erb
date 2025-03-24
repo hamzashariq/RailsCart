@@ -1,0 +1,59 @@
+<%= form_for(user, url: update_settings_user_path, html: { method: :patch, class: "space-y-6", id: "user_settings_form" }) do |f| %>
+  <%= render partial: "devise/shared/error_messages", locals: { resource: user } %>
+
+  <!-- Profile Picture -->
+  <div class="flex items-center space-x-4">
+    <div class="relative">
+      <% if user.avatar.attached? %>
+        <%= image_tag user.avatar, class: "w-20 h-20 rounded-full" %>
+      <% else %>
+        <div class="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center">
+          <svg class="w-12 h-12 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      <% end %>
+    </div>
+    <div>
+      <%= f.file_field :avatar, 
+          class: "block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" %>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">PNG, JPG or GIF (MAX. 800x800px)</p>
+    </div>
+  </div>
+
+  <!-- Name Fields -->
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <div>
+      <%= f.label :first_name, class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
+      <%= f.text_field :first_name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm" %>
+    </div>
+
+    <div>
+      <%= f.label :last_name, class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
+      <%= f.text_field :last_name, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm" %>
+    </div>
+  </div>
+
+  <!-- Email -->
+  <div>
+    <%= f.label :email, class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
+    <%= f.email_field :email, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm" %>
+  </div>
+
+  <!-- Password Fields -->
+  <div class="space-y-6">
+    <div>
+      <%= f.label :password, "New Password (leave blank if you don't want to change it)", class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
+      <%= f.password_field :password, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm" %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-700 dark:text-gray-200" %>
+      <%= f.password_field :password_confirmation, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white sm:text-sm" %>
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <%= f.submit "Save Changes", class: "ml-3 inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" %>
+  </div>
+<% end %>

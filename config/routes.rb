@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
     resource :user, only: [] do
       get "orders", on: :member
+      get :settings
+      patch :update_settings
     end
   end
 

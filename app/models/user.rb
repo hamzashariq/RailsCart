@@ -9,6 +9,7 @@ class User < ApplicationRecord
   belongs_to :company
   has_one :cart, dependent: :destroy
   has_many :orders, dependent: :destroy
+  has_one_attached :avatar
 
   validates :first_name, presence: true, length: { maximum: 50 }
   validates :last_name, presence: true, length: { maximum: 50 }
