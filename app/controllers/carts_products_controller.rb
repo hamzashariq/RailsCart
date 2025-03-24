@@ -5,7 +5,8 @@ class CartsProductsController < ApplicationController
 
     render turbo_stream: [
       turbo_stream.replace("cart-product-#{cart_product.id}", partial: "carts/cart_product", locals: { cart_product: cart_product }),
-      turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items })
+      turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items }),
+      turbo_stream.replace("order-summary", partial: "carts/order_summary", locals: { cart: current_cart })
     ]
   end
 
@@ -16,13 +17,15 @@ class CartsProductsController < ApplicationController
       cart_product.update!(quantity: cart_product.quantity - 1)
       render turbo_stream: [
         turbo_stream.replace("cart-product-#{cart_product.id}", partial: "carts/cart_product", locals: { cart_product: cart_product }),
-        turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items })
-    ]
+        turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items }),
+        turbo_stream.replace("order-summary", partial: "carts/order_summary", locals: { cart: current_cart })
+      ]
     else
       cart_product.destroy
       render turbo_stream: [
         turbo_stream.remove("cart-product-#{cart_product.id}"),
-        turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items })
+        turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items }),
+        turbo_stream.replace("order-summary", partial: "carts/order_summary", locals: { cart: current_cart })
       ]
     end
   end
@@ -33,7 +36,8 @@ class CartsProductsController < ApplicationController
     cart_product.destroy
     render turbo_stream: [
       turbo_stream.remove("cart-product-#{cart_product.id}"),
-      turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items })
+      turbo_stream.replace("cart-item-count", partial: "layouts/cart_item_count", locals: { cart_item_count: current_cart.total_items }),
+      turbo_stream.replace("order-summary", partial: "carts/order_summary", locals: { cart: current_cart })
     ]
   end
 
@@ -41,7 +45,7 @@ class CartsProductsController < ApplicationController
     product = Product.find(params[:product_id])
 
     cart_product = current_cart.carts_products.find_or_initialize_by(product: product)
-    
+
     if cart_product.new_record?
       cart_product.quantity = 1
     else
