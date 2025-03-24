@@ -1,7 +1,7 @@
 module Orders
-  class OrderCreator    
+  class OrderCreator
     attr_reader :cart, :user, :delivery_information_params, :order
-    
+
     def initialize(cart, user, delivery_information_params)
       @cart = cart
       @user = user
@@ -35,12 +35,16 @@ module Orders
 
     def create_product_snapshots!
       cart.carts_products.each do |cart_product|
-        ProductSnapshot.create!(
+        snapshot = ProductSnapshot.create!(
           order: order,
           name: cart_product.product.name,
           price: cart_product.product.price,
           quantity: cart_product.quantity
         )
+
+        if cart_product.product.image.attached?
+          snapshot.image.attach cart_product.product.image.blob
+        end
       end
     end
 

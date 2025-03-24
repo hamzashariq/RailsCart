@@ -1,11 +1,10 @@
 class PaymentsController < ApplicationController
   def new
-    # fetch order using order_id param
-    # fill the order summary in the view with the order details
+    @order = current_user.orders.find(params[:order_id])
   end
 
   def create
-    # Put session creation logic in a service
+    @order = current_user.orders.find(params[:order_id])
 
     session = Stripe::Checkout::Session.create(
       customer_email: current_user.email,
@@ -13,27 +12,29 @@ class PaymentsController < ApplicationController
         price_data: {
           currency: "usd",
           product_data: {
-            name: "Custom Payment"
+            name: "Order ##{@order.id}"
           },
-          unit_amount: 400 # Amount in cents
+          unit_amount: (@order.total * 100).to_i # Convert to cents
         },
         quantity: 1
       }],
       mode: "payment",
-      success_url:  success_payments_url,
-      cancel_url: cancel_payments_url
+      success_url: success_payments_url(order_id: @order.id),
+      cancel_url: cancel_payments_url(order_id: @order.id)
      )
 
      redirect_to session.url, allow_other_host: true
   end
 
   def success
-    # handle successful payments
-    redirect_to root_url(subdomain: current_tenant.subdomain), notice: "Purchase Successful"
+    @order = Order.find(params[:order_id])
+    @order.update!(delivery_status: :confirmed)
+
+    redirect_to order_path(@order), notice: "Payment successful! Your order has been confirmed."
   end
 
   def cancel
-    # handle if the payment is cancelled
-    redirect_to root_url, notice: "Purchase Unsuccessful"
+    @order = Order.find(params[:order_id])
+    redirect_to order_path(@order), alert: "Payment was cancelled. Please try again."
   end
 end

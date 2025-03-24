@@ -11,6 +11,10 @@ class OrdersController < ApplicationController
     # work on adding the order status enum, set order status to pending in the order creation service
   end
 
+  def show
+    @order = current_user.orders.find(params[:id])
+  end
+
   private
 
   def delivery_information_params
