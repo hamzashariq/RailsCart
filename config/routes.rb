@@ -13,7 +13,9 @@ Rails.application.routes.draw do
     # Root path for subdomains
     root "home#index", as: :subdomain_root
 
-    resources :products, only: [:index, :show]
+    resources :products, only: [:index, :show] do
+      resources :reviews, only: [:create]
+    end
 
     resource :cart, only: [:show] do
       member do

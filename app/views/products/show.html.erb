@@ -1,3 +1,4 @@
 <section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
   <%= render partial: 'products/show', locals: { product: @product } %>
+  <%= render partial: "reviews", locals: { product: @product } %>
 </section>
