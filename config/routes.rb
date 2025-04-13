@@ -13,6 +13,9 @@ Rails.application.routes.draw do
     # Root path for subdomains
     root "home#index", as: :subdomain_root
 
+    # About page route
+    get "about", to: "home#about", as: :about
+
     resources :products, only: [:index, :show] do
       resources :reviews, only: [:create]
     end

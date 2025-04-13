@@ -64,6 +64,17 @@ ActiveAdmin.register_page "Store Settings" do
             row :updated_at
           end
         end
+
+        panel "About Page" do
+          active_admin_form_for current_user.company, url: admin_panel_store_settings_update_about_page_path(current_user.company), html: { method: :patch } do |f|
+            f.inputs do
+              f.input :about_page_content, as: :text, input_html: { rows: 10 }
+            end
+            f.actions do
+              f.action :submit, label: "Update About Page"
+            end
+          end
+        end
       end
     end
   end
@@ -96,6 +107,16 @@ ActiveAdmin.register_page "Store Settings" do
       image = current_user.company.carousel_images.find(params[:image_id])
       image.purge
       flash[:notice] = "Image removed successfully"
+    end
+    redirect_to admin_panel_store_settings_path
+  end
+
+  page_action :update_about_page, method: :patch do
+    company = current_user.company
+    if company.update(about_page_content: params[:company][:about_page_content])
+      flash[:notice] = "About page content updated successfully"
+    else
+      flash[:error] = company.errors.full_messages.join(", ")
     end
     redirect_to admin_panel_store_settings_path
   end
