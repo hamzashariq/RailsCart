@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_04_13_110444) do
+ActiveRecord::Schema[7.2].define(version: 2025_04_13_112717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_04_13_110444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "about_page_content"
+    t.text "contact_page_content"
     t.index ["subdomain"], name: "index_companies_on_subdomain", unique: true
   end
 

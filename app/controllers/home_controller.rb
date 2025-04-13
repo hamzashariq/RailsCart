@@ -7,6 +7,9 @@ class HomeController < ApplicationController
   def about
   end
 
+  def contact
+  end
+
   def landing
     render layout: "landing"
   end

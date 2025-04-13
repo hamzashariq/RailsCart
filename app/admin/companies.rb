@@ -75,6 +75,17 @@ ActiveAdmin.register_page "Store Settings" do
             end
           end
         end
+
+        panel "Contact Page" do
+          active_admin_form_for current_user.company, url: admin_panel_store_settings_update_contact_page_path(current_user.company), html: { method: :patch } do |f|
+            f.inputs do
+              f.input :contact_page_content, as: :text, input_html: { rows: 10 }
+            end
+            f.actions do
+              f.action :submit, label: "Update Contact Page"
+            end
+          end
+        end
       end
     end
   end
@@ -115,6 +126,16 @@ ActiveAdmin.register_page "Store Settings" do
     company = current_user.company
     if company.update(about_page_content: params[:company][:about_page_content])
       flash[:notice] = "About page content updated successfully"
+    else
+      flash[:error] = company.errors.full_messages.join(", ")
+    end
+    redirect_to admin_panel_store_settings_path
+  end
+
+  page_action :update_contact_page, method: :patch do
+    company = current_user.company
+    if company.update(contact_page_content: params[:company][:contact_page_content])
+      flash[:notice] = "Contact page content updated successfully"
     else
       flash[:error] = company.errors.full_messages.join(", ")
     end

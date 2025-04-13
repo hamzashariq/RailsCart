@@ -16,6 +16,9 @@ Rails.application.routes.draw do
     # About page route
     get "about", to: "home#about", as: :about
 
+    # Contact page route
+    get "contact", to: "home#contact", as: :contact
+
     resources :products, only: [:index, :show] do
       resources :reviews, only: [:create]
     end
