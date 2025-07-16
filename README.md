@@ -199,33 +199,6 @@ Access the admin panel at `/admin_panel` (requires admin user role):
 - **Orders**: Track and manage orders
 - **Companies**: Manage tenant stores
 
-## 🚀 Deployment
-
-### Docker
-```bash
-# Build the image
-docker build -t ecommerce-app .
-
-# Run with docker-compose
-docker-compose up
-```
-
-### Heroku
-```bash
-# Create Heroku app
-heroku create your-app-name
-
-# Add PostgreSQL addon
-heroku addons:create heroku-postgresql:hobby-dev
-
-# Set environment variables
-heroku config:set STRIPE_SECRET_KEY=sk_live_...
-
-# Deploy
-git push heroku main
-heroku run rails db:migrate
-```
-
 ## 🔧 Development
 
 ### Adding a New Store
@@ -255,26 +228,6 @@ The application provides a web interface, but key endpoints include:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue on GitHub
-- Email: admin@example.com
-
-## 🎯 Roadmap
-
-- [ ] Advanced analytics dashboard
-- [ ] Multi-currency support
-- [ ] Advanced inventory management
-- [ ] Email marketing integration
-- [ ] Mobile app API
-- [ ] Advanced search and filtering
-- [ ] Social media integration
 
 ---
 
